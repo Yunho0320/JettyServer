@@ -1,0 +1,7 @@
+Server (from Jetty) — listens for TCP/IP connections. It accepts raw HTTP requests and hands them off to a Handler.
+ServletContextHandler (from Jetty) — a special type of Handler that manages servlet mappings (i.e., mapping URL paths to Servlets).
+Handler (in Jetty) — is any object that handles HTTP requests at a low level. Jetty is built around the concept of Handlers.
+Servlet (from jakarta.servlet) — is a standard Java EE API that provides structured ways to handle HTTP methods (doGet(), doPost(), doPut(), etc.).
+A Servlet runs inside a ServletContextHandler (or more generally inside a ServletHandler).
+
+*HttpServlet is NOT a Handler itself. Instead HttpServlet is wrapped by Jetty inside a Handler (specifically, inside a ServletHandler inside a ServletContextHandler).
