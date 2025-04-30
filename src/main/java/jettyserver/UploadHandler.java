@@ -21,13 +21,28 @@ public class UploadHandler extends HttpServlet {
         String receivedJson = jsonBuilder.toString();
         System.out.println("Received JSON content:\n" + receivedJson);
 
-        // Step 2: Save the data to a file
-        File outputFile = new File("uploaded.json"); // You can customize the filename if needed
+        // Step 2: Create inner directory: data/<name>
+        File baseDir = new File("data");
+        File innerDir = new File(baseDir, "innerdata");
+
+        if (!innerDir.exists()) {
+            boolean created = innerDir.mkdirs(); // creates both "data" and "data/James"
+            if (created) {
+                System.out.println("Created directory: " + innerDir.getAbsolutePath());
+            } else {
+                System.out.println("Failed to create directory.");
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                return;
+            }
+        }
+
+        // Step 3: Save the data to a file
+        File outputFile = new File(innerDir,"uploaded.json"); // You can customize the filename if needed
         try (FileWriter writer = new FileWriter(outputFile)) { // creating a file reference in the current working directory
             writer.write(receivedJson);
         }
 
-        // Step 3: Respond with 200 OK
+        // Step 4: Respond with 200 OK
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.getWriter().write("JSON file uploaded and saved successfully."); // Sending a message back to the client
     }
