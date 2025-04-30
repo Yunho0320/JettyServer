@@ -15,6 +15,7 @@ public class DownloadHandler extends HttpServlet {
             resp.setContentType("application/json");
             resp.setStatus(HttpServletResponse.SC_OK);
 
+            // reading the contetns of uploaded.json from the disk & writing the contents into the HTTP reseponse body
             try (BufferedReader reader = new BufferedReader(new FileReader(uploadedFile));
                  PrintWriter writer = resp.getWriter()) {
                 String line;
